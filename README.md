@@ -30,7 +30,7 @@ The above code would set up a subscription between topic1 and http://localhost:8
 The /event endpoint is just used to print the data and verify everything is working.
 
 
-### An example to simulate 2 subscriber setup
+### An example to simulate 2 subscriber setup consuming events from 2 different topics [topic1] and [topic2]
 server start up
 ```sh
 $ ./start-server.sh
@@ -41,7 +41,7 @@ subscriber subscription
 $ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
 $ curl -X POST -d '{ "url": "http://localhost:8000/"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
 
-***the same subscribers from above subscripting to another topic[topic2]
+***the same subscribers from above subscribting to another topic[topic2]
 $ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic2
 $ curl -X POST -d '{ "url": "http://localhost:8000/"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic2
 ```
