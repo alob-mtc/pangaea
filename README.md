@@ -16,7 +16,8 @@ BODY { "message": "hello"}
 
 The above code would publish on whatever is passed in the body (as JSON) to the supplied topic in the URL. This endpoint should trigger a forwarding of the data in the body to all of the currently subscribed URL's for that topic.
 
-Testing it all out Publishing an event
+#### Testing it all out Publishing an event 
+##### The content type must be set to => 'Content-Type: application/json' for it to work properly 
 ```sh
 $ ./start-server.sh
 $ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
