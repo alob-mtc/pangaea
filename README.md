@@ -19,8 +19,9 @@ The above code would publish on whatever is passed in the body (as JSON) to the 
 Testing it all out Publishing an event
 ```sh
 $ ./start-server.sh
-$ curl -X POST -d '{ "url": "http://localhost:8000/event"}' http://localhost:8000/subscribe/topic1
-$ curl -X POST -H "Content-Type: application/json" -d '{"message": "hello"}' http://localhost:8000/publish/topic1
+$ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
+$ curl -X POST -H "Content-Type: application/json" -d '{"message": "hello"}' -H 'Content-Type: application/json' http://localhost:8000/publish/topic1
+$ curl http://localhost:8000/event
 ```
 
 The above code would set up a subscription between topic1 and http://localhost:8000/event. When the event is published in line 3, it would send both the topic and body as JSON to http://localhost:8000
