@@ -1,12 +1,7 @@
 {
-  "name": "express-typescript-starter",
-  "version": "0.1.0",
+  "name": "pangaea",
+  "version": "1.0.0",
   "description": "A starting point for Node.js express apps with TypeScript",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/TypeScript-Node-Starter"
-  },
-  "author": "Bowden Kelly",
   "license": "MIT",
   "scripts": {
     "build": "yarn run clean && yarn run lint && yarn run build-ts",
