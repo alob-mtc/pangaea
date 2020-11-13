@@ -29,3 +29,25 @@ The above code would set up a subscription between topic1 and http://localhost:8
 
 The /event endpoint is just used to print the data and verify everything is working.
 
+
+### An example to simulate 2 subscriber setup
+server start up
+```sh
+$ ./start-server.sh
+```
+subscriber subscription
+```sh
+***two subscribers subscription to same topic[topic1]
+$ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
+$ curl -X POST -d '{ "url": "http://localhost:8000/"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic1
+
+***the same subscribers from above subscripting to another topic[topic2]
+$ curl -X POST -d '{ "url": "http://localhost:8000"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic2
+$ curl -X POST -d '{ "url": "http://localhost:8000/"}' -H 'Content-Type: application/json' http://localhost:8000/subscribe/topic2
+```
+```sh
+***publish event on both topics [topic1 and topic2]
+$ curl -X POST -H "Content-Type: application/json" -d '{"message": "Hello from topic1"}' -H 'Content-Type: application/json' http://localhost:8000/publish/topic1
+$ curl -X POST -H "Content-Type: application/json" -d '{"message": "Hello from topic2"}' -H 'Content-Type: application/json' http://localhost:8000/publish/topic2
+*** retrieve all event from subscribers event store
+$ curl http://localhost:8000/event

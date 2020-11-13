@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable quotes */
 import { AxiosResponse } from "axios";
+import makeId from "cuid";
 // Subscribe event data
 export type SubscribeEvent = {
     topic: string;
@@ -9,6 +12,11 @@ export type SubscribeEvent = {
 };
 
 export class Publisher {
+    /**
+     * {
+     *  topic : [subscribers]
+     * }
+     */
     private subscribers: any
     constructor(){
         this.subscribers = {};
@@ -21,8 +29,22 @@ export class Publisher {
         if (!this.subscribers[topic]) {
             this.subscribers[topic] = [];
         }
-        subscriber.subscibe(topic);
+        subscriber.subscribe(topic);
         this.subscribers[topic].push(subscriber);
+    }
+
+    /**
+     * getSubscriberById(id: string): Subscriber
+     */
+    public getSubscriberById(id: string): Subscriber {
+        const subscribers: Subscriber[] = this.getAllSubscribers();
+        for (let i = 0; i < subscribers.length; i++) {
+            const subscriber = subscribers[i];
+            if (subscriber.getId() === id) {
+                return subscriber;
+            }
+        }
+        return null;
     }
     /**
      * getSubscribe: Subscriber[]rs
@@ -59,11 +81,13 @@ export class Publisher {
 
 export class Subscriber {
 
+    private id: string
     private topics: string[]
     private eventStore: SubscribeEvent[]
     private url: string
     private pubsub :(url: string, data: SubscribeEvent) => Promise<AxiosResponse>
     constructor(url: string, pubsub: (url: string, data: SubscribeEvent) => Promise<AxiosResponse>){
+        this.id = makeId();
         this.topics = [];
         this.eventStore = [];
         this.url = url;
@@ -71,15 +95,21 @@ export class Subscriber {
     }
 
     /**
+     * getId: string
+     */
+    public getId(): string {
+        return this.id;
+    }
+    /**
      * getEven: SubscribeEvent[]
      */
     public getEvents(): SubscribeEvent[] {
         return this.eventStore;
     }
     /**
-     * subscibe
+     * subscribe
      */
-    public subscibe(topic: string): void {
+    public subscribe(topic: string): void {
         this.topics.push(topic);
     }
 
@@ -107,6 +137,6 @@ export class Subscriber {
      * publish
      */
     public publish(message: SubscribeEvent):void {
-        this.pubsub(this.url, message);
+        this.pubsub(this.url + `?id=${this.id}`, message);
     }
 }

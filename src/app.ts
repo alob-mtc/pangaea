@@ -19,7 +19,7 @@ app.use(morgan("dev"));
  * Primary app routes.
  */
 app.get("/api", apiController.root);
-app.post("/", apiController.addEvent);
+app.post("/", apiController.consumeEvent);
 app.get("/event", apiController.getEvent);
 app.post("/subscribe/:topic", apiController.subscribe);
 app.post("/publish/:topic", apiController.publish);
