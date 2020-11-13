@@ -31,6 +31,11 @@ The /event endpoint is just used to print the data and verify everything is work
 
 
 ### An example to simulate 2 subscriber setup consuming events from 2 different topics [topic1] and [topic2]
+
+server set up (installs all application dependencies)
+```sh
+$ yarn
+```
 server start up
 ```sh
 $ ./start-server.sh
